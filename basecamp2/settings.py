@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'basecamp2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-database_url = os.environ.get('DATABASE_URL', '')
+database_url = os.environ.get('DATABASE_PUBLIC_URL', '')
 if database_url:
     DATABASES = {
         'default': dj_database_url.parse(database_url, conn_max_age=600)
