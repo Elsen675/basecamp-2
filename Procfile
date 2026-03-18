@@ -1,1 +1,1 @@
-web: gunicorn basecamp2.wsgi
+web: python manage.py migrate && gunicorn basecamp2.wsgi
