@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 50px auto;">
+    <h2 style="margin-bottom: 20px;">Giriş</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>İstifadəçi adı</label>
+        <input type="text" name="username" required>
+        <label>Şifrə</label>
+        <input type="password" name="password" required>
+        <button class="btn btn-primary" type="submit">Daxil ol</button>
+    </form>
+    <p style="margin-top: 15px;">Hesabın yoxdur? <a href="{% url 'register' %}">Qeydiyyat</a></p>
+</div>
+{% endblock %}

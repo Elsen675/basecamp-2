@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Layihələr</h2>
+    <a href="{% url 'project_create' %}" class="btn btn-primary">+ Yeni Layihə</a>
+</div>
+{% for project in projects %}
+<div class="card">
+    <h3><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></h3>
+    <p style="color: #757575; margin-top: 8px;">{{ project.description }}</p>
+    <p style="margin-top: 8px; font-size: 14px;">Admin: {{ project.admin.username }}</p>
+</div>
+{% empty %}
+<div class="card">
+    <p>Hələ heç bir layihə yoxdur. Yeni layihə yarat!</p>
+</div>
+{% endfor %}
+{% endblock %}

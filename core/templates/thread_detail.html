@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>{{ thread.title }}</h2>
+    <p style="font-size: 14px; color: #757575;">{{ thread.project.name }} layihəsi</p>
+</div>
+
+<h3 style="margin: 20px 0 10px;">Mesajlar</h3>
+{% for message in thread.messages.all %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between;">
+        <strong>{{ message.created_by.username }}</strong>
+        <span style="font-size: 12px; color: #757575;">{{ message.created_at|date:"d.m.Y H:i" }}</span>
+    </div>
+    <p style="margin-top: 10px;">{{ message.content }}</p>
+    {% if request.user == message.created_by %}
+    <div style="margin-top: 10px;">
+        <a href="{% url 'message_edit' message.pk %}" class="btn btn-secondary">Düzəlt</a>
+        <a href="{% url 'message_destroy' message.pk %}" class="btn btn-danger">Sil</a>
+    </div>
+    {% endif %}
+</div>
+{% empty %}
+<div class="card"><p>Hələ heç bir mesaj yoxdur.</p></div>
+{% endfor %}
+
+<div class="card">
+    <h3 style="margin-bottom: 15px;">Mesaj yaz</h3>
+    <form method="POST" action="{% url 'message_create' thread.pk %}">
+        {% csrf_token %}
+        <textarea name="content" rows="3" placeholder="Mesajını yaz..." required></textarea>
+        <button class="btn btn-primary" type="submit">Göndər</button>
+    </form>
+</div>
+{% endblock %}

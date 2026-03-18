@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basecamp 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        nav { background: #1a73e8; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; text-decoration: none; margin-left: 15px; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; margin: 4px; }
+        .btn-primary { background: #1a73e8; color: white; }
+        .btn-danger { background: #e53935; color: white; }
+        .btn-secondary { background: #757575; color: white; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0 16px; border: 1px solid #ddd; border-radius: 4px; }
+        .messages { margin-bottom: 15px; }
+        .error { background: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'project_list' %}" style="font-size: 20px; font-weight: bold;">Basecamp 2</a>
+        <div>
+            {% if user.is_authenticated %}
+                <span style="color: white;">{{ user.username }}</span>
+                <a href="{% url 'logout' %}">Çıxış</a>
+            {% else %}
+                <a href="{% url 'login' %}">Giriş</a>
+                <a href="{% url 'register' %}">Qeydiyyat</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="error">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

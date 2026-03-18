@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>{{ project.name }}</h2>
+    <p style="color: #757575; margin-top: 8px;">{{ project.description }}</p>
+    <p style="margin-top: 8px; font-size: 14px;">Admin: {{ project.admin.username }}</p>
+</div>
+
+<h3 style="margin: 20px 0 10px;">Fayllar</h3>
+<a href="{% url 'attachment_create' project.pk %}" class="btn btn-primary">+ Fayl əlavə et</a>
+{% for attachment in project.attachments.all %}
+<div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+    <span>{{ attachment.file.name }} ({{ attachment.format }})</span>
+    <a href="{% url 'attachment_destroy' attachment.pk %}" class="btn btn-danger">Sil</a>
+</div>
+{% empty %}
+<div class="card"><p>Heç bir fayl yoxdur.</p></div>
+{% endfor %}
+
+<h3 style="margin: 20px 0 10px;">Mövzular</h3>
+{% if request.user == project.admin %}
+<a href="{% url 'thread_create' project.pk %}" class="btn btn-primary">+ Yeni Mövzu</a>
+{% endif %}
+{% for thread in project.threads.all %}
+<div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+    <a href="{% url 'thread_detail' thread.pk %}">{{ thread.title }}</a>
+    {% if request.user == project.admin %}
+    <div>
+        <a href="{% url 'thread_edit' thread.pk %}" class="btn btn-secondary">Düzəlt</a>
+        <a href="{% url 'thread_destroy' thread.pk %}" class="btn btn-danger">Sil</a>
+    </div>
+    {% endif %}
+</div>
+{% empty %}
+<div class="card"><p>Heç bir mövzu yoxdur.</p></div>
+{% endfor %}
+{% endblock %}

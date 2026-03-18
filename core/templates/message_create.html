@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2 style="margin-bottom: 20px;">Mesaj yaz — {{ thread.title }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="content" rows="4" placeholder="Mesajını yaz..." required></textarea>
+        <button class="btn btn-primary" type="submit">Göndər</button>
+        <a href="{% url 'thread_detail' thread.pk %}" class="btn btn-secondary">Geri</a>
+    </form>
+</div>
+{% endblock %}
